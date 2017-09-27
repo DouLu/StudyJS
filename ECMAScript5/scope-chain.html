@@ -16,7 +16,7 @@
     }
     c();
     console.log(color);
-
+    /*量提升即将变量声明提升到它所在作用域的最开始的部分*/
     var name = "jack";
     function d(){
         if(name==="jack"){
@@ -28,16 +28,9 @@
     }
     d();
     console.log(name);
-
     (function(){
+        console.log(name);
         if(typeof  name==='undefined'){
-            var name = "tom";
-            console.log(name);
-        }else {
-            console.log(name);
-        }
-
-        if(name==="jack"){
             var name = "tom";
             console.log(name);
         }else {
