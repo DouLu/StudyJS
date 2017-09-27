@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>执行环境及作用域</title>
+</head>
+<body>
+<script>
+    var color = "blue";
+    function c(){
+        if(color==="blue"){
+            color = "red";
+        }else {
+            color = "blue";
+        }
+    }
+    c();
+    console.log(color);
+
+    var name = "jack";
+    function d(){
+        if(name==="jack"){
+            var name = "tom";
+            console.log(name);
+        }else {
+            console.log(name);
+        }
+    }
+    d();
+    console.log(name);
+
+    (function(){
+        if(typeof  name==='undefined'){
+            var name = "tom";
+            console.log(name);
+        }else {
+            console.log(name);
+        }
+
+        if(name==="jack"){
+            var name = "tom";
+            console.log(name);
+        }else {
+            console.log(name);
+        }
+    })();
+    console.log(name);
+</script>
+</body>
+</html>
