@@ -6,6 +6,9 @@
 </head>
 <body>
 <script>
+    /**
+     * 从当前作用域找，一直到全局作用域
+     */
     var color = "blue";
     function c(){
         if(color==="blue"){
@@ -15,29 +18,29 @@
         }
     }
     c();
-    console.log(color);
-    /*量提升即将变量声明提升到它所在作用域的最开始的部分*/
+    console.log(color);//red
+    /*变量提升即将变量声明提升到它所在作用域的最开始的部分*/
     var name = "jack";
     function d(){
         if(name==="jack"){
             var name = "tom";
             console.log(name);
         }else {
-            console.log(name);
+            console.log(name);//undefined
         }
     }
     d();
-    console.log(name);
+    console.log(name);//jack
     (function(){
-        console.log(name);
+        console.log(name);//undefined
         if(typeof  name==='undefined'){
             var name = "tom";
-            console.log(name);
+            console.log(name);//tom
         }else {
             console.log(name);
         }
     })();
-    console.log(name);
+    console.log(name);//jack
 </script>
 </body>
 </html>

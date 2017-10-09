@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+</head>
+<body>
+<script>
+    function fun(n,o) {
+        console.log(o);
+        return {
+            fun:function(m){
+                return fun(m,n);
+            }
+        };
+    }
+    var a = fun(0);//n=0,o=undefined,结果undefined
+    a.fun(1);  //n=0,m=1,结果0
+    a.fun(2);  //n=0,m=2,结果0
+    a.fun(3);  //n=0,m=3,结果0
+    var b = fun(0).fun(1).fun(2).fun(3);
+    /**fun(0),n=0,o=undefined,打印o=undefined,返回对象obj
+     * {
+        fun:function(m){
+            return fun(m,n);
+        }
+        }
+     fun(0).fun(1)===obj.fun(m),m=1;返回函数fun(n,o),n=m=1,o=n=0;打印o=0
+     fun(0).fun(1).fun(2)===obj.fun(m),m=2;返回函数fun(n,o),n=m=2,o=n=1;打印o=1
+     fun(0).fun(1).fun(2).fun(3)===obj.fun(m),m=3;返回函数fun(n,o),n=m=3,o=n=2;打印o=2
+     */
+    var c = fun(0).fun(1);//n=0,o=undefined,打印undefined;m=1,n=m=1,o=n=0,打印0
+    c.fun(2);  //obj.fun(m),m=2;返回函数fun(n,o),n=m=2,o=n=1;打印o=1
+    c.fun(3);  //obj.fun(m),m=3;返回函数fun(n,o),n=m=3,o=n=1;打印o=1.闭包函数的变量的值始终保持在内存中
+
+    /*没有使用var 声明的变量都是全局变量*/
+    /**
+     * 获取其他函数的内部变量
+     * */
+    function f1() {
+        var n = 999;
+        function f2() {
+            console.log(n);
+        }
+        return f2;/*返回闭包函数*/
+    }
+    var result = f1();
+    result(); // 999
+    /*为什么直接调用f1()函数，没有值？？？？因为f1()函数带有返回值的函数，在返回值时才调用闭包函数f2()*/
+
+    /**
+     *内部变量不会被垃圾回收，注意清除不必的全局变量。
+     * */
+    function f11(){
+        var n=111;
+        nAdd=function(){n+=1};/*全局变量，匿名函数nAdd，同时nAdd()也是一个闭包函数*/
+        function f2(){
+            console.log(n);
+        }
+        return f2;
+    }
+    var result1=f11();
+    result1(); // 111
+    nAdd();
+    result1(); // 112
+
+
+    /**
+     * this指代调用函数的那个对象
+     *闭包函数是全局变量对象
+     */
+    var name = "The Window";
+    var object = {
+        name : "My Object",
+        getNameFunc : function(){
+            return function(){
+                return this.name;
+            };
+        }
+    };
+    console.log(object.getNameFunc()());//The Window
+    var name1 = "The Window";
+    var object1 = {
+        name1 : "My Object",
+        getNameFunc : function(){
+            var that = this;
+            return function(){
+                return that.name1;
+            };
+        }
+    };
+    console.log(object1.getNameFunc()());//My Object
+</script>
+</body>
+</html>

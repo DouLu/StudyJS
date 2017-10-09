@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js原型链</title>
+</head>
+<body>
+<script>
+    /**
+     * http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html
+     */
+    function fn() {
+        this.a = 0;
+        this.b = function() {
+            console.log(this.a)
+        }
+    }
+    fn.prototype = {
+        b: function() {
+            this.a = 20;
+            console.log(this.a);
+        },
+        c: function() {
+            this.a = 30;
+            console.log(this.a);
+        }
+    };
+    var myfn = new fn();
+    myfn.b();
+    myfn.c();
+    //0,30
+</script>
+</body>
+</html>
