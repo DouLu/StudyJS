@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json解析</title>
+</head>
+<body>
+<!--<script type="text/javascript" src="json.js"></script>-->
+<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+<script>
+    /**
+     * 在数据传输流程中，json是以文本，即字符串的形式传递的，而JS操作的是JSON对象，所以，JSON对象和JSON字符串之间的相互转换是关键
+     * 如果obj本来就是一个JSON对象，那么运用 eval（）函数转换后（哪怕是多次转换）还是JSON对象，但是运用 parseJSON（）函数处理后会有疑问（抛出语法异常）
+     * JSON字符串:var str1 = '{ "name": "cxh", "sex": "man" }';
+     * JSON对象:var str2 = { "name": "cxh", "sex": "man" };
+     */
+    /**
+     * JSON字符串转对象
+     */
+    var str1 = '{ "name": "cxh", "sex": "man" }';
+    //由JSON字符串转换为JSON对象
+    var obj1 = eval('(' + str1 + ')');
+    //由JSON字符串转换为JSON对象
+    var obj2 =JSON.parse(str1);//var obj = str.parseJSON();此函数是json.js的函数
+    console.log(obj1.name);
+    console.log(obj2.sex);
+    /**
+     * JSON对象转字符串
+     *  toJSONString()或者全局要领 JSON.stringify()将JSON对象转化为JSON字符串
+     */
+    var str2 = { "name": "cxh", "sex": "man" };
+    //将JSON对象转化为JSON字符
+    var last=JSON.stringify(str2); //var last1=str2.toJSONString();此函数是json.js的函数
+    console.log(str2);
+    console.log(last);
+    console.log(str2,last);
+    /**
+     * 数组
+     */
+    var str='[{"name":"cxh","sex":"man"},{"name":"cxh1","sex":"man1"}]';
+    var obj = JSON.parse(str);
+    console.log(obj[0].name)
+</script>
+</body>
+</html>
