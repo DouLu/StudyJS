@@ -9,6 +9,38 @@
     /**
      * http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html
      */
+    /**
+     * 原型对象：
+     * 在 JavaScript 中，每当定义一个对象（函数也是对象）时候，对象中都会包含一些预定义的属性。
+     * 其中每个函数对象都有一个prototype 属性，这个属性指向函数的原型对象。
+     * 【每个对象都有 __proto__ 属性，但只有函数对象才有 prototype 属性】
+     * 【实例的构造函数属性（constructor）指向构造函数】
+     * 【person1.constructor == Person
+        Person.prototype.constructor == Person】
+     【原型对象（Person.prototype）是 构造函数（Person）的一个实例】
+     */
+    function Person() {}
+    /*Person.prototype.name = 'Zaxlct';
+    Person.prototype.age  = 28;
+    Person.prototype.job  = 'Software Engineer';
+    Person.prototype.sayName = function() {
+        alert(this.name);
+    };*/
+
+    Person.prototype = {
+        name:  'Zaxlct',
+        age: 28,
+        job: 'Software Engineer',
+        sayName: function() {
+            alert(this.name);
+        }
+    };
+    var person1 = new Person();
+    person1.sayName(); // 'Zaxlct'
+    var person2 = new Person();
+    person2.sayName(); // 'Zaxlct'
+    console.log(person1.sayname == person2.sayname); //true
+
     function fn() {
         this.a = 0;
         this.b = function() {

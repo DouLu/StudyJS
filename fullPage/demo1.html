@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>www.heibaiping.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-moudule .page1 {
+            background: #0ac2d2;
+        }
+
+        .page-moudule .page2 {
+            background: #60d7a9;
+        }
+
+        .page-moudule .page3 {
+            background: #fdc162;
+        }
+
+        .page-moudule .page4 {
+            background: #fd6a62;
+        }
+
+        .page-moudule .page5 {
+            background: #f68dbb;
+        }
+    </style>
+</head>
+<body>
+<!--布局-->
+<div id="page">
+    <div class="page-moudule">
+        <div class="page page1">111</div>
+        <div class="page page2">222</div>
+        <div class="page page3">333</div>
+        <div class="page page4">444</div>
+        <div class="page page5">555</div>
+        <div class="page page1">111</div>
+        <div class="page page2">222</div>
+        <div class="page page3">333</div>
+        <div class="page page4">444</div>
+        <div class="page page5">555</div>
+    </div>
+</div>
+</body>
+<!--<script src="http://www.heibaipig.com/front/js/jquery-1.8.3.min.js"></script>-->
+<script src="../jquery-3.2.1.min.js"></script>
+<script>
+    var TabPage = function (param) {
+//配置参数
+        this.tar = $('#' + param.id);
+        this.delay = param.delay || 500;
+        this.cubic = param.cubic || 'ease';
+        this.fn = param.fn;
+        this.iNow = param.iNow || 0;
+//默认参数
+        this.box = this.tar.find('.page-moudule');
+        this.list = this.tar.find('.page');
+        this.isOver = true;
+//初始化
+        this.init();
+    };
+    TabPage.prototype = {
+        constructor: TabPage,
+        init: function () {
+            this.movePage(this.iNow);
+            this.verticalInit();
+        },
+        eventFn: function () {
+            var _self = this;
+            //firefox识别DOMMouseScroll
+            this.tar.on('mousewheel DOMMouseScroll', function (e) {
+                e.preventDefault();
+                if (!_self.isOver) {
+                    return false;
+                }
+                _self.isOver = false;
+                //判断滚轮上下方向
+                if (e.originalEvent.wheelDelta > 0) {
+                    _self.iNow = _self.iNow - 1;
+                } else {
+                    _self.iNow = _self.iNow + 1;
+                }
+                _self.movePage(_self.iNow);
+            });
+            //transitionend 事件在 CSS 完成过渡后触发
+            this.box.on('transitionend', function (e) {
+                _self.isOver = true;
+                _self.fn(e, _self.iNow + 1);//回调函数
+            });
+            $(window).on('keydown', function (e) {
+                if (e.keyCode === 38) {
+                    _self.iNow = _self.iNow - 1;
+                }
+                if (e.keyCode === 40) {
+                    _self.iNow = _self.iNow + 1;
+                }
+                _self.movePage(_self.iNow);
+            });
+        },
+        movePage: function (n) {
+            if (n < 0) {
+                this.iNow = 0;
+                this.isOver = true;
+                return false;
+            }
+            if (n > this.list.length - 1) {
+                this.iNow = this.list.length - 1;
+                this.isOver = true;
+                return false;
+            }
+            this.box.css('transform', 'translate(0, -' + 100 / this.list.length * n + '%)');
+        },
+        pageShowInit: function () {
+            this.tar.css({
+                'position': 'absolute',
+                'left': 0,
+                'top': 0,
+                'width': '100%',
+                'height': '100%',
+                'overflow': 'hidden'
+            })
+        },
+//初始化定位
+        verticalInit: function () {
+            this.pageShowInit();
+            this.box.css({
+                'position': 'absolute',
+                'left': 0,
+                'top': 0,
+                'width': '100%',
+                'height': 100 * this.list.length + '%',
+                'transition': 'transform ' + this.delay + 'ms ' + this.cubic
+            });
+            this.list.css({
+                'position': 'relative',
+                'width': '100%',
+                'height': 100 / this.list.length + '%'
+            });
+            this.eventFn();
+        }
+    };
+    new TabPage({
+        id: 'page', //父级ID
+        delay: 400, //滑屏时间 单位ms
+        cubic: 'linear', //运动曲线
+        isMobile: false, //是否是移动版
+        fn: function (e, n) { //回调函数 e事件， n屏幕
+            console.log('第' + n + '屏幕', e);
+        }
+    });
+</script>
+</html>
