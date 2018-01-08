@@ -61,3 +61,4 @@ var calc = {
 // method invocation. this is calc
 calc.increment(); // => 1
 calc.increment(); // => 2
+console.log(calc.increment());//=>3
