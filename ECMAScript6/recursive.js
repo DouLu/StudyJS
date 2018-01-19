@@ -97,3 +97,39 @@ console.log(Xn(6),Fn(6),Xn(0),Fn(0));
  * Xn = X(n-1) + X(n-2) ; n>=2;
  * fn = f(n-1) + Xn; n>=2;
  */
+const fibonacci = function (n) {
+    let fib = (n) =>{
+        if( n===1){
+            return 0;
+        }else if( n===2){
+            return 1;
+        }
+        return fib(n-1)+fib(n-2);
+    };
+    return fib(n);
+};
+console.log(fibonacci(1),fibonacci(2),fibonacci(10),fibonacci(40));
+
+const fibonacci1 = function (n) {
+    let i, a, b, c;
+    a = 0;
+    b = 1;
+    for (i = 0; i < n - 1; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return a;
+};
+console.log(fibonacci1(1),fibonacci1(2),fibonacci1(10),fibonacci1(40));
+const fibonacci2 = (n) => /* TODO */
+{
+    let a = 1,b=1,c;
+    for(let i=1;i<n;i++){
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return a;
+};
+console.log(fibonacci2(5));
