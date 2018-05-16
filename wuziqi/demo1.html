@@ -64,7 +64,7 @@
             var tr = '<tr>';
             var tds ='';
             for(var c=0;c<initQipan.col;c++){
-                tds += '<td data-r="'+r+'" data-c="'+c+'"></td>'
+                tds += '<td data-r="'+r+'" data-c="'+c+'" data-p="['+r+','+c+']"></td>'
             }
             tr +=tds+'</tr>';
             trs +=tr;
@@ -88,6 +88,16 @@
         });
     };
     var isWin = function (nowEle) {
+        /**
+         * 胜利规则
+         * @type {jQuery|HTMLElement}
+         * @private
+         * 每下一个棋子，判断该子上下左右，左上，左下，右上，右下，六个方向的同颜色棋子数量。
+         * 1、左斜线：判断左上方向，连续的同颜色棋子数量，<5，判断右下方向，连续的同颜色棋子数量+[左上数量]>=5，胜利
+         * 2、竖线：上下两个方向
+         * 3、右斜线：
+         */
+
         //横向判断是否胜利
         //当前棋子的某个方向上的连接数
 //        console.log(initQipan.blackArr,initQipan.whiteArr);

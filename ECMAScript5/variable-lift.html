@@ -44,6 +44,16 @@
             console.log('Hello ' + name);
         }
     })();
+
+    let lname = '111';
+    (function () {
+        if (typeof lname === 'undefined') {
+            let lname = 'Jack';
+            console.log('Goodbye ' + lname);
+        } else {
+            console.log('Hello ' + lname);
+        }
+    })();
 </script>
 </body>
 </html>
